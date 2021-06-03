@@ -4,7 +4,6 @@ import { hash } from 'bcryptjs'
 import pool from '../../Pool'
 import { OperationalError } from '../../utils/OperationalError'
 import { handleCatch } from '../../utils/handleCatch'
-import { ApolloError } from 'apollo-server-errors'
 
 const handleEmailValidation = (email: string) => {
   const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -37,7 +36,11 @@ const handlePasswordEncryption: (password: string) => Promise<string> = async (
   return await hash(password, 12)
 }
 
-const signJWT = (userPayload: {}) => {}
+const signJWT = (userPayload: { id: number }) => {
+  if (!process.env.JWT_KEY) throw new OperationalError('JWT_KEY is not defined')
+
+  return sign(userPayload, process.env.JWT_KEY)
+}
 
 export default {
   async signup(
@@ -86,9 +89,14 @@ export default {
         ]
       )
 
-      return insertResponse.rows[0]
+      const userPayload: { id: number } = {
+        id: insertResponse.rows[0].id,
+      }
+
+      const token = signJWT(userPayload)
+
+      return { user: insertResponse.rows[0], token }
     } catch (error) {
-      console.log(error)
       handleCatch(error)
     }
   },

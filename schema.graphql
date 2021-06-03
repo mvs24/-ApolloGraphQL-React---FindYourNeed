@@ -1,7 +1,7 @@
 scalar Timestamp
 
 type User {
-  id: ID
+  id: Int
   name: String
   lastname: String
   role: String
@@ -18,11 +18,15 @@ type Query {
 }
 
 type Mutation {
-  signup(authenticationPayload: AuthenticationPayload): User!
+  signup(authenticationPayload: AuthenticationPayload): AuthenticationResponse!
+}
+
+type AuthenticationResponse {
+  user: User!
+  token: String!
 }
 
 input AuthenticationPayload {
-  id: ID
   name: String
   lastname: String
   email: String
