@@ -16,6 +16,7 @@ export const Timestamp = new GraphQLScalarType({
     if (ast.kind === Kind.INT) {
       return new Date(parseInt(ast.value, 10))
     } else if (ast.kind === Kind.STRING) {
+      // @ts-ignore
       return this.parseValue(ast.value)
     } else {
       return null

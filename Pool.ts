@@ -1,14 +1,14 @@
 import { Pool, PoolConfig, QueryConfig } from 'pg'
 
 class PGPool {
-  private pool: Pool = null
+  private pool: any
 
   connect(connectionOptions: PoolConfig) {
     this.pool = new Pool(connectionOptions)
   }
 
-  query(queryConfig: string, values?: any) {
-    return this.pool.query(queryConfig, values)
+  async query(queryConfig: string, values?: any) {
+    return await this.pool.query(queryConfig, values)
   }
 }
 
