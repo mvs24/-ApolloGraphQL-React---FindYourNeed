@@ -1,0 +1,33 @@
+scalar Timestamp
+
+type User {
+  id: ID
+  name: String
+  lastname: String
+  role: String
+  speciality: String
+  email: String
+  password: String
+  passwordConfirm: String
+  passwordResetToken: String
+  passwordResetExpires: Timestamp
+}
+
+type Query {
+  getUser(id: String!): User
+}
+
+type Mutation {
+  signup(authenticationPayload: AuthenticationPayload): User!
+}
+
+input AuthenticationPayload {
+  id: ID
+  name: String
+  lastname: String
+  email: String
+  password: String
+  passwordConfirm: String
+  role: String
+  speciality: String
+}
