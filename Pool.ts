@@ -1,4 +1,4 @@
-import { Pool, PoolConfig, QueryConfig } from 'pg'
+import { Pool, PoolConfig } from 'pg'
 
 class PGPool {
   private pool: any
