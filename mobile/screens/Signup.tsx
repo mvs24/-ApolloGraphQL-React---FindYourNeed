@@ -111,8 +111,6 @@ const Signup: React.FC<Props> = () => {
         passwordConfirm: passwordConfirmState.state.value,
       },
     })
-
-    console.log(res)
   }
 
   const isInputValid = function (input: InputState, text: string): boolean {
